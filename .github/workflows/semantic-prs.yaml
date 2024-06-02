@@ -41,7 +41,10 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: kubeflow/notebooks/.github/actions/conventional-release-labels@main
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+      - uses: ./.github/actions/conventional-release-labels
         with:
           type_labels: |
             {
@@ -56,3 +59,4 @@ jobs:
               "chore"
             ]
           ignore_label: "changelog/ignore"
+
