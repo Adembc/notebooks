@@ -208,25 +208,3 @@ GOBIN=$(LOCALBIN) go install $${package} ;\
 mv "$$(echo "$(1)" | sed "s/-$(3)$$//")" $(1) ;\
 }
 endef
-
-define prompt_for_e2e_test_execution
-    if [ "$$(echo "$(KUBEFLOW_TEST_PROMPT)" | tr '[:upper:]' '[:lower:]')" = "false" ]; then \
-        echo "Skipping E2E test confirmation prompt (KUBEFLOW_TEST_PROMPT is set to false)"; \
-    else \
-        current_k8s_context=$$(kubectl config current-context); \
-        echo "================================ WARNING ================================"; \
-		echo "E2E tests use your current Kubernetes context!"; \
-		echo "This will DELETE EXISTING RESOURCES such as cert-manager!"; \
-        echo "Current context: '$$current_k8s_context'"; \
-		echo "========================================================================="; \
-        echo "Proceed with E2E tests? (yes/NO)"; \
-        read user_confirmation; \
-        case $$user_confirmation in \
-            [yY] | [yY][eE][sS] ) \
-                echo "Running E2E tests...";; \
-            [nN] | [nN][oO] | * ) \
-                echo "Aborting E2E tests..."; \
-                exit 1; \
-        esac \
-    fi
-endef
