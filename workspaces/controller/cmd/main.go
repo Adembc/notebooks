@@ -119,7 +119,7 @@ func main() {
 		// after the manager stops then its usage might be unsafe.
 		//
 		// TODO: check if we are doing anything which would prevent us from using this option.
-		// LeaderElectionReleaseOnCancel: true,
+		// LeaderElectionReleaseOnCancel: false,
 	})
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
